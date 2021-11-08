@@ -8,8 +8,10 @@
         app:showAsAction="never" />
     <item android:id="@+id/login"
         android:title="login"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
     <item android:id="@+id/logout"
         android:title="logout"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+       />
 </menu>

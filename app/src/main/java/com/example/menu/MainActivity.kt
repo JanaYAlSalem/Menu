@@ -1,63 +1,77 @@
 package com.example.menu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.isVisible
+import com.example.menu.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private var logIn_logOut = true
+    private var IsLogin = true
+    lateinit var LinkXML: ActivityMainBinding // to initializes LinkXML in future time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        LinkXML = ActivityMainBinding.inflate(layoutInflater)  // initializes the binding object
+        setContentView(LinkXML.root) // get root of XML
     }
 
 
-
-
-    /**
-     * Initializes the [Menu] to be used with the current [Activity]
-     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.layout_menu, menu)
-
-        val layoutButton = menu?.findItem(R.id.login)
-        // Calls code to set the icon based on the LinearLayoutManager of the RecyclerView
-        setIcon(layoutButton)
         return true
-    }
-
-    private fun setIcon(menuItem: MenuItem?) {
-        if (menuItem == null)
-            return
-
-        menuItem.title = if (logIn_logOut) "login" else "logout"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.login -> {
-                item.title = "logout"
+                return true
             }
-
             R.id.logout -> {
-                item.title = "login"
+                return true
             }
-
             R.id.ContactUs -> {
                 //change avt
-                }
-
-            R.id.Setting -> {
-                //change avt
+                return true
             }
 
-            else -> super.onOptionsItemSelected(item)
+            R.id.Setting -> {
+                 /**
+                  * open next page
+                  */
+                val intent = Intent(this, SettingPage::class.java )
+                intent.putExtra("HH", item.title )
+                this.startActivity(intent)
+                return true
+
+            }
+            else -> return super.onOptionsItemSelected(item)
+
+
         } // end when
-        return true
-        setIcon(item)
+
     } // end function
+
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+        var login = menu?.findItem(R.id.login)
+        var logout = menu?.findItem(R.id.logout)
+        if(IsLogin){
+            IsLogin=!IsLogin
+            login?.setVisible(true)
+            logout?.setVisible(false)
+        } else {
+            IsLogin=!IsLogin
+            login?.setVisible(false)
+            logout?.setVisible(true)
+        }
+
+        return super.onPrepareOptionsMenu(menu)
+    }
 }
