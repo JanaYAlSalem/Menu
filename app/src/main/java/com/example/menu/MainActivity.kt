@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         var login = menu?.findItem(R.id.login)
         var logout = menu?.findItem(R.id.logout)
+        
         if(IsLogin){
             IsLogin=!IsLogin
             login?.setVisible(true)
